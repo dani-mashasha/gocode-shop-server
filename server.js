@@ -1,12 +1,25 @@
-
-
 const express = require("express");
 const fs = require("fs");
-const { readFile, writeFile } = require("./utils.js");
+const { v4: uuidv4 } = require('uuid');
+const { query } = require("express");
+
+const mongoose = require('mongoose');
+const { json } = require("body-parser");
 
 const app = express();
 
 app.use(express.json());
+
+const productSchema = new mongoose.Schema({
+    title: String,
+    price: Number,
+    description: String,
+    category: String,
+    image: String,
+
+});
+
+const Product = mongoose.model('Product', productSchema);
 
 
 app.get("/", (req, res) => {
@@ -14,94 +27,108 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/products", (req, res) => {
-   readFile((err, data) => {
-        if(!err){
-            const products = JSON.parse(data);
-            res.send(products);
-        }else {
-            res.send("Cant find products")
+app.get("/products",async (req, res) => {
+    const {category, min, max} = req.query;
+    await Product.find((err, products) => {
+        if(category){
+            category === "all items"?  products = products: products =products.filter(product=>product.category === category);
         }
-    });
-});
-
-
-app.get("/products/:id", (req, res) => {
-    const {id} = req.params;
-    readFile((err, data) => {
-        if(!err){
-            const products = JSON.parse(data);
-            const product = products.find(product => product.id === +id);
-            product?res.send(product):res.send("Cant find product");
-                     
-        }else{
-            res.send("Cant Find Data");
-        }      
-    });
-})
-
-
-app.post("/products", (req, res) => {
-    const {title} = req.body;
-    readFile((err, data) => {
-        if(!err){
-            let products = JSON.parse(data);
-            const newProduct = {
-                title,
-                id: products.length+1
-            }
-            products.push(newProduct);
-            fs.writeFile("./products.js",JSON.stringify(products),(err) => {
-                if(err){
-                    res.send("EROR")
-                }
-            })
-        }else{
-            res.send("Cant Find Data")
+        if(min){
+            products = products.filter(product => product.price >= +min);
         }
+        if(max){
+            products = products.filter(product => product.price <= +max);
+        }
+        res.send(products);
     })
 });
 
 
-app.put("/products/:id", (req, res) => {
+app.get("/products/:id", async(req, res) => {
     const {id} = req.params;
-    const {title} = req.body;
-    readFile((err,data) => {
-        if(!err){
-            const products = JSON.parse(data);
-            const product = products.find(product => product.id === +id);
-            if(product){
-                product.title = title;
-                writeFile(JSON.stringify(products), err => {
-                    if(err){
-                        res.send("Cant Updated");
-                    }else{
-                        res.send("Updated Succefuly")
-                    }
+    await Product.findById(id, (err, product) => {
+        if(err){
+            console.log(err)
+        }
+        console.log(product);
+        res.send(product);
+    })
+
+});
+
+
+app.post("/products", async(req, res) => {
+    const {title, price, description, category, image} = req.body;
+    const product = new Product({
+        title,
+        price,
+        description,
+        category,
+        image
+    });
+    try{
+        await product.save();
+        res.status(201).send(product);
+    } catch(error){
+        res.status(500).send(error);
+    }
+});
+
+
+app.put("/products/:id", async(req, res) => {
+    const {id} = req.params;
+    const {title, price, description, category, image} = req.body;
+
+    const updatedProduct = {};
+    title? updatedProduct.title = title : null;
+    price? updatedProduct.price = price : null;
+    description? updatedProduct.description = description : null;
+    category? updatedProduct.category = category : null;
+    image? updatedProduct.image = image : null;
+
+    await Product.findByIdAndUpdate(id, updatedProduct, (err, product) => {
+        res.send(product)
+    })
+});
+
+
+app.delete("/products/:id",async (req, res) => {
+    try{
+        const {id} = req.params;
+        await Product.findByIdAndDelete(id, (err, product) => {
+        res.send(product)})
+    } catch(err) {
+        res.send("Product Not Found")
+    }
+    
+});
+
+
+function initProducts(){
+    Product.findOne((err, product) => {
+        if(!product){
+            fs.readFile("./initialProducts.json", "utf8", (err, data) => {
+                let initialProducts = JSON.parse(data);
+                Product.insertMany(initialProducts, (err, products) => {
+                    console.log(products)
                 })
-            }
-        }else{
-            res.send("Cant Find Data");   
-        }
-    })
-});
-
-
-app.delete("/products/:id", (req, res) => {
-    const {id} = req.params;
-    readFile((err,data) => {
-        if(!err){
-            let products = JSON.parse(data);
-                products = products.filter(product => product.id !== +id);
-            writeFile(JSON.stringify(products), err => {
-                if(err){
-                    res.send("ERR");
-                }else{
-                    res.send("Product Deleted")
-                }
             })
         }
     })
-});
+};
 
-app.listen("8080");
+initProducts();
+
+
+mongoose.connect(
+    'mongodb://localhost/gocode_shop', 
+    {  useNewUrlParser: true,
+       useCreateIndex: true,
+       useUnifiedTopology: true},
+       () => {
+           console.log("Connected To DB")
+           app.listen("8080");  
+       }
+  );
+  
+
