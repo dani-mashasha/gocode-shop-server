@@ -113,7 +113,6 @@ function initProducts() {
         fs.readFile("./initialProducts.json", "utf8", (err, data) => {
           let initialProducts = JSON.parse(data);
           Product.insertMany(initialProducts).then((products) => {
-            console.log(products);
           });
         });
       } else {
