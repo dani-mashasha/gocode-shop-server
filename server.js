@@ -11,6 +11,8 @@ app.use(cors());
 
 require("dotenv").config();
 
+app.use(express.static('client/build'));
+
 const productSchema = new mongoose.Schema({
   title: String,
   price: Number,
@@ -25,7 +27,7 @@ app.get("/", (req, res) => {
   res.send("Home");
 });
 
-app.get("/products", (req, res) => {
+app.get("/api/products", (req, res) => {
   const { category, min, max } = req.query;
   Product.find().then((products) => {
     if (category) {
@@ -45,7 +47,7 @@ app.get("/products", (req, res) => {
   });
 });
 
-app.get("/products/:id", (req, res) => {
+app.get("/api/products/:id", (req, res) => {
   const { id } = req.params;
   Product.findById(id).then(
     (product) => {
@@ -57,7 +59,7 @@ app.get("/products/:id", (req, res) => {
   );
 });
 
-app.post("/products", (req, res) => {
+app.post("/api/products", (req, res) => {
   const { title, price, description, category, image } = req.body;
   if (title && price && description && category && image) {
     const product = new Product({
@@ -73,7 +75,7 @@ app.post("/products", (req, res) => {
   }
 });
 
-app.put("/products/:id", (req, res) => {
+app.put("/api/products/:id", (req, res) => {
   const { id } = req.params;
   const { title, price, description, category, image } = req.body;
 
@@ -94,7 +96,7 @@ app.put("/products/:id", (req, res) => {
   );
 });
 
-app.delete("/products/:id", (req, res) => {
+app.delete("/api/products/:id", (req, res) => {
   const { id } = req.params;
   Product.findByIdAndDelete(id).then(
     (product) => {
@@ -105,6 +107,10 @@ app.delete("/products/:id", (req, res) => {
     }
   );
 });
+
+app.get('*', (req, res) => {
+    res.sendFile(__dirname+'/client/build/index.html');
+  });
 
 function initProducts() {
   Product.findOne()
@@ -127,6 +133,10 @@ function initProducts() {
 initProducts();
 
 const {DB_USER, DB_PASS, DB_NAME, DB_HOST} = process.env;
+
+const port = process.env.PORT || 8080;
+ 
+
 mongoose
   .connect(
       `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`, 
@@ -136,7 +146,8 @@ mongoose
   })
   .then(
     () => {
-      app.listen(process.env.PORT || 8080);
+      app.listen(port);
+      console.log(`Listening on ${port}`);
     },
     (err) => {
       console.log(err);
