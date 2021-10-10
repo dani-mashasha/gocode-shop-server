@@ -6,12 +6,13 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 
-app.use(express.json());
-app.use(cors());
-
 require("dotenv").config();
 
 app.use(express.static('client/build'));
+app.use(express.json());
+app.use(cors());
+
+
 
 const productSchema = new mongoose.Schema({
   title: String,
@@ -136,7 +137,6 @@ const {DB_USER, DB_PASS, DB_NAME, DB_HOST} = process.env;
 
 const port = process.env.PORT || 8080;
  
-
 mongoose
   .connect(
       `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`, 

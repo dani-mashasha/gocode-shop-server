@@ -47,7 +47,7 @@ export default function SimpleCard({props}) {
         {props.title}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          adjective
+          {props.description}
         </Typography>
         <Typography variant="body2" component="p">
           well meaning and kindly.
@@ -56,7 +56,7 @@ export default function SimpleCard({props}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">-</Button>    {props.amount&& props.amount}    <Button size="small">+</Button>
+        <Button size="small">-</Button>    {props.amount && props.amount}    <Button size="small">+</Button>
 
       </CardActions>
     </Card>
