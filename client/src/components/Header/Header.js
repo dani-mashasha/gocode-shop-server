@@ -4,6 +4,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CartDrawer from "../CartDrawer/CartDrawer.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,12 +29,14 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            {/* <MenuIcon /> */}
+            <AccountCircleIcon/>
           </IconButton>
           <Typography variant="h4" className={classes.title}>
           <Link to="/" style={{ color: '#FFFFFF', textDecoration: "none" }}>Shopping Store</Link> 
           </Typography>
           <CartDrawer/>
+          
         </Toolbar>
       </AppBar>
     </div>
