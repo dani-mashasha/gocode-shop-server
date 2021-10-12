@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Footer from "../components/Footer/Footer.js";
 import Header from "../components/Header/Header.js";
 import Loading from "../components/Loader/Loader.js";
 
@@ -34,6 +35,8 @@ function ProductDetails() {
             </div>
         </div>
      }
+     <Footer/>
+
      </>    
     )
 }
