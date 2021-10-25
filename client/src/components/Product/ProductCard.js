@@ -50,7 +50,7 @@ const ProductCard = (props) => {
     const classes = useStyles();
     const {addToCart} = useContext(CartContext); 
     return(
-        <Grid item  xs={6} s={12} md={4} lg={3}>
+        <Grid item  xs={12} s={6} md={4} lg={3}>
         <Card className={classes.card}>
             <CardMedia
             className={classes.media}

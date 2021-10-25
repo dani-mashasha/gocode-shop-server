@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
       height: "90%",
       margin: "5px",
+      textAlign:"center"
     },
     media: {
       height: 0,
@@ -33,14 +34,16 @@ const useStyles = makeStyles((theme) => ({
     content: {
       overflow: "hidden",
       display: "-webkit-box",
-      WebkitLineClamp: 3,
-      WebkitBoxOrient: "vertical"
+      WebkitBoxOrient: "vertical",
+      fontSize: "15px",
+        
     },
     headline: {
         overflow: "hidden",
         display: "-webkit-box",
-        WebkitLineClamp: 1,
-        WebkitBoxOrient: "vertical"
+        WebkitBoxOrient: "vertical",
+        fontSize: "30px",
+        fontFamily: "Georgia",
       },
      add:{
         fontFamily: "Georgia",
@@ -71,9 +74,9 @@ function ProductDetails() {
     <>
     <Header/>
      {loader? <Loading/> :
-                <Grid item  xs={6} s={12} md={4} lg={3}>
-                <Card className={classes.card}>
-                    <CardMedia
+                <Grid >    
+            <Card className={classes.card}>                
+                <CardMedia
                     className={classes.media}
                     image={product.image}
                     title={product.title}

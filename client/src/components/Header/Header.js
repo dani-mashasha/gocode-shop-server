@@ -2,10 +2,8 @@ import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CartDrawer from "../CartDrawer/CartDrawer.js";
+import LoginMenu from "../LoginMenu/LoginMenu.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,13 +26,13 @@ export default function Header() {
     <div className={classes.root} style={{ marginBottom:"30px" }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            {/* <MenuIcon /> */}
-            <AccountCircleIcon/>
-          </IconButton>
+
+        <LoginMenu/>
+
           <Typography variant="h4" className={classes.title}>
           <Link to="/" style={{ color: '#FFFFFF', textDecoration: "none" }}>Shopping Store</Link> 
           </Typography>
+          
           <CartDrawer/>
           
         </Toolbar>
