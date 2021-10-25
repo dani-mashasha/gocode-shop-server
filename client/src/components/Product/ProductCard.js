@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
     media: {
       height: 0,
       paddingTop: '56%',
+      backgroundSize: "contain"
+
     },
     details: {
       display: "flex",
@@ -38,7 +40,11 @@ const useStyles = makeStyles((theme) => ({
         display: "-webkit-box",
         WebkitLineClamp: 1,
         WebkitBoxOrient: "vertical"
-      }
+      },
+     add:{
+        fontFamily: "Georgia",
+        fontSize: "15px",
+      },
   }));
 const ProductCard = (props) => {
     const classes = useStyles();
@@ -64,8 +70,8 @@ const ProductCard = (props) => {
             <Typography className={classes.space}>
                     ${props.price}
                 </Typography>
-            <IconButton edge="start" color="inherit" aria-label="menu"  onClick = {addToCart} value = {props._id}>
-            <ShoppingBasketIcon />
+            <IconButton  className={classes.add} edge="start" color="inherit" aria-label="menu"  onClick = {addToCart} value = {props._id}>
+            <ShoppingBasketIcon /><p>Add to cart</p>
           </IconButton>
         </Card>
         </Grid>

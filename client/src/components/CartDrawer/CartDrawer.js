@@ -7,10 +7,11 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import { Badge, Icon, IconButton } from '@material-ui/core';
+import { Badge, Icon, IconButton, ListItemSecondaryAction } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { CartContext } from '../../contexts/CartContext.js';
 import SimpleCard from '../CartItem.js';
+import PaymentIcon from '@material-ui/icons/Payment';
 
 
 const useStyles = makeStyles({
@@ -20,12 +21,17 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
+  payment: {
+    padding: "10px"
+
+
+  }
 });
 
 export default function CartDrawer() {
 
-  const {cart,itemsInCart} = useContext(CartContext);
-  // const totalPrice = cart.reduce((acc, curr) => acc + curr.price, 0); 
+  const {cart, itemsInCart, totalPrice} = useContext(CartContext);
+  
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -33,6 +39,10 @@ export default function CartDrawer() {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
+    if(event.target.innerText === "+" || event.target.innerText === "-"){
+      return;
+    }
+    console.log(event)
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -53,10 +63,22 @@ export default function CartDrawer() {
           {cart.length > 0?
           cart.map((product)=> <ListItem>
                 <SimpleCard props = {product}/>
-        </ListItem>):<div></div>
+        </ListItem>):null
           
         }
       </List>
+      
+      {Math.round(totalPrice * 100) / 100 > 0?
+      <div className={classes.payment}>
+        <p style={{padding: "5px"}}>Total Price: {Math.round(totalPrice * 100) / 100}$</p>
+        <Button color={'primary'} variant="contained" endIcon={<PaymentIcon/>}>
+         advance to payment</Button>
+       </div>
+      : <p style={{padding: "5px"}}>Your cart is empty...</p>}
+     
+        
+       
+      
     </div>
   );
 
