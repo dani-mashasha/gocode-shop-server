@@ -4,6 +4,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IconButton } from '@material-ui/core';
+import { Link } from "react-router-dom";
+
 
 
 export default function LoginMenu() {
@@ -35,7 +37,11 @@ export default function LoginMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+
+        <Link to="/admin">
+          <MenuItem onClick={handleClose}> Profile </MenuItem>
+       </Link>
+
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleClose}>Login</MenuItem>
       </Menu>

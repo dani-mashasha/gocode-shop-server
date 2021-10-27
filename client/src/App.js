@@ -11,6 +11,8 @@ import Home from './views/Home.js';
 import ProductDetails from './views/ProductDetails.js';
 import { ProductsProvider } from './contexts/ProductsContext.js';
 import AdminPanel from './views/AdminPanel.js';
+import ProductsGrid from './views/ProductsGrid.js';
+
 
 
 function App() {
@@ -31,6 +33,10 @@ function App() {
        <ProductsProvider>
        <CartProvider>
           <Switch>
+
+          <Route path="/products-grid">
+              <ProductsGrid/>
+             </Route>
             
              <Route path="/products/:id">
               <ProductDetails/>

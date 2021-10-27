@@ -4,6 +4,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CartDrawer from "../CartDrawer/CartDrawer.js";
 import LoginMenu from "../LoginMenu/LoginMenu.js";
+import StoreIcon from '@material-ui/icons/Store';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,10 @@ export default function Header() {
         <LoginMenu/>
 
           <Typography variant="h4" className={classes.title}>
-          <Link to="/" style={{ color: '#FFFFFF', textDecoration: "none" }}>Shopping Store</Link> 
+          <Link to="/" style={{ color: '#FFFFFF', textDecoration: "none" , fontFamily:"Helvetica"}}>
+          <StoreIcon style={{fontSize:" 33px", position: "relative",top: "5px"}}/>
+          Shopping Store
+          </Link> 
           </Typography>
           
           <CartDrawer/>
