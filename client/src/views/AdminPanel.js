@@ -1,7 +1,7 @@
 import AdminTable from "../components/AdminTable/AdminTable.js";
+import LoginForm from "../components/LoginForm/LoginForm.js";
 // import BasicTable from "../components/AdminTable/exemple.js";
-import Header from "../components/Header/Header.js";
-import Footer from "../components/Footer/Footer.js";
+
 
 
 
@@ -9,10 +9,9 @@ import Footer from "../components/Footer/Footer.js";
 function AdminPanel() {
     return(
        <>
-        <Header/>
+       <LoginForm/>
         {/* <BasicTable/> */}
         {/* <AdminTable/> */}
-        <Footer/>
       </>
     )
 }

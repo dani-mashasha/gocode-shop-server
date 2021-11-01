@@ -1,7 +1,5 @@
-import Footer from "../components/Footer/Footer.js";
-import Header from "../components/Header/Header.js";
 import { Link } from "react-router-dom";
-import { Button, CardMedia, makeStyles ,Container} from "@material-ui/core";
+import { Button, CardMedia, makeStyles } from "@material-ui/core";
 import { urlencoded } from "body-parser";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,8 +35,6 @@ function Home() {
 
     return(
         <div className="App">
-        <Header/>
-
         <div className={classes.homeImg}>
           <h1 className={classes.headline}>Welcom to my online store</h1>
            <Link className={classes.link} to="/products-grid">
@@ -50,8 +46,6 @@ function Home() {
 
         <div className={classes.infoDiv}>
         </div>
-
-        <Footer/> 
       </div>
     )
 }

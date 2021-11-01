@@ -1,8 +1,6 @@
 import { Card, CardContent, CardMedia, Grid, IconButton, Link, makeStyles, Typography } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Footer from "../components/Footer/Footer.js";
-import Header from "../components/Header/Header.js";
 import Loading from "../components/Loader/Loader.js";
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { CartContext } from "../contexts/CartContext.js";
@@ -72,7 +70,6 @@ function ProductDetails() {
 
     return(
     <>
-    <Header/>
      {loader? <Loading/> :
                 <Grid >    
             <Card className={classes.card}>                
@@ -100,7 +97,6 @@ function ProductDetails() {
                 </Card>
                 </Grid>
      }
-     <Footer/>
 
      </>    
     )

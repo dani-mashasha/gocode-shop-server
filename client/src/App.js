@@ -12,6 +12,8 @@ import ProductDetails from './views/ProductDetails.js';
 import { ProductsProvider } from './contexts/ProductsContext.js';
 import AdminPanel from './views/AdminPanel.js';
 import ProductsGrid from './views/ProductsGrid.js';
+import Header from './components/Header/Header.js';
+import Footer from './components/Footer/Footer.js';
 
 
 
@@ -32,6 +34,8 @@ function App() {
             renders the first one that matches the current URL. */}
        <ProductsProvider>
        <CartProvider>
+
+       <Header/>
           <Switch>
 
           <Route path="/products-grid">
@@ -51,6 +55,7 @@ function App() {
              </Route>
 
            </Switch>
+           <Footer/>
         </CartProvider>
         </ProductsProvider>
       </div>
