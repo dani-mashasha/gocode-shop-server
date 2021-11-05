@@ -1,37 +1,40 @@
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
-import React, { useContext } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import { Badge, Icon, IconButton, ListItemSecondaryAction } from '@material-ui/core';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import { CartContext } from '../../contexts/CartContext.js';
-import SimpleCard from '../CartItem.js';
-import PaymentIcon from '@material-ui/icons/Payment';
-
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import {
+  Badge,
+  Icon,
+  IconButton,
+  ListItemSecondaryAction,
+} from "@material-ui/core";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import { CartContext } from "../../contexts/CartContext.js";
+import SimpleCard from "../CartItem.js";
+import PaymentIcon from "@material-ui/icons/Payment";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles({
   list: {
     width: 250,
   },
   fullList: {
-    width: 'auto',
+    width: "auto",
   },
   payment: {
-    padding: "10px"
-
-
-  }
+    padding: "10px",
+  },
 });
 
 export default function CartDrawer() {
-
-  const {cart, itemsInCart, totalPrice} = useContext(CartContext);
-  
+  const { cart, itemsInCart, totalPrice } = useContext(CartContext);
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -39,11 +42,14 @@ export default function CartDrawer() {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if(event.target.innerText === "+" || event.target.innerText === "-"){
+    if (event.target.innerText === "+" || event.target.innerText === "-") {
       return;
     }
-    console.log(event)
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    console.log(event);
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
 
@@ -53,45 +59,81 @@ export default function CartDrawer() {
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-          {cart.length > 0?
-          cart.map((product)=> <ListItem>
-                <SimpleCard props = {product}/>
-        </ListItem>):null
-          
-        }
+        {cart.length > 0
+          ? cart.map((product) => (
+              <ListItem>
+                <SimpleCard props={product} />
+              </ListItem>
+            ))
+          : null}
       </List>
-      
-      {Math.round(totalPrice * 100) / 100 > 0?
-      <div className={classes.payment}>
-        <p style={{padding: "5px"}}>Total Price: {Math.round(totalPrice * 100) / 100}$</p>
-        <Button color={'primary'} variant="contained" endIcon={<PaymentIcon/>}>
-         advance to payment</Button>
-       </div>
-      : <p style={{padding: "5px"}}>Your cart is empty...</p>}
-     
-        
-       
-      
+
+      {Math.round(totalPrice * 100) / 100 > 0 ? (
+        <div className={classes.payment}>
+          <p style={{ padding: "5px" }}>
+            Total Price: {Math.round(totalPrice * 100) / 100}$
+          </p>
+
+          {/* <Button
+            color={"primary"}
+            variant="contained"
+            endIcon={<PaymentIcon />}
+          >
+            <Link to="/profile">advance to payment</Link>
+          </Button> */}
+
+          {isAuthenticated ? (
+            <Link to="/profile" style={{ textDecoration: "none" }}>
+              <Button
+                color={"primary"}
+                variant="contained"
+                endIcon={<PaymentIcon />}
+              >
+                advance to payment
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              onClick={() => loginWithRedirect()}
+              color={"primary"}
+              variant="contained"
+              endIcon={<PaymentIcon />}
+            >
+              advance to payment
+            </Button>
+          )}
+        </div>
+      ) : (
+        <p style={{ padding: "5px" }}>Your cart is empty...</p>
+      )}
     </div>
   );
 
   return (
     <div>
-      {['right'].map((anchor) => (
+      {["right"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <IconButton style={{ color: '#FFFFFF'}}>
-              <Badge badgeContent={itemsInCart} color="secondary" onClick={toggleDrawer(anchor, true)}>
-              <AddShoppingCartIcon/>
-              </Badge>
-            </IconButton>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <IconButton style={{ color: "#FFFFFF" }}>
+            <Badge
+              badgeContent={itemsInCart}
+              color="secondary"
+              onClick={toggleDrawer(anchor, true)}
+            >
+              <AddShoppingCartIcon />
+            </Badge>
+          </IconButton>
+          <Drawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+          >
             {list(anchor)}
           </Drawer>
         </React.Fragment>

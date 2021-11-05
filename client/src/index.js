@@ -1,16 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
+import { Auth0Provider } from "@auth0/auth0-react";
+import { ProductsProvider } from "./contexts/ProductsContext.js";
+import { CartProvider } from "./contexts/CartContext.js";
+
+// const { AUTH0_DOMAIN, AUTH0_CLIENT_ID } = process.env;
+// console.log(process.env.AUTH0_DOMAIN);
+
+const AUTH0_DOMAIN = "dev-8chdq0gt.us.auth0.com";
+const AUTH0_CLIENT_ID = "xgQF0IajgPXvQJFVVDlmGierdC7wjcUJ";
 
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+  <ProductsProvider>
+    <CartProvider>
+      <Auth0Provider
+        domain={AUTH0_DOMAIN}
+        clientId={AUTH0_CLIENT_ID}
+        redirectUri={window.location.origin}
+      >
+        <App />
+      </Auth0Provider>
+    </CartProvider>
+  </ProductsProvider>,
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

@@ -1,11 +1,10 @@
-import * as React from 'react';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IconButton } from '@material-ui/core';
+import * as React from "react";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function LoginMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -17,35 +16,46 @@ export default function LoginMenu() {
     setAnchorEl(null);
   };
 
+  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+
   return (
     <div>
-        <IconButton  id="basic-button"
+      <IconButton
+        id="basic-button"
         aria-controls="basic-menu"
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick} edge="start"  color="inherit" aria-label="menu">
-            <AccountCircleIcon/>
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+      >
+        <AccountCircleIcon />
       </IconButton>
-  
+
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          "aria-labelledby": "basic-button",
         }}
       >
-
-        <Link to="/admin">
+        <Link to="/profile" style={{ textDecoration: "none" }}>
           <MenuItem onClick={handleClose}> Profile </MenuItem>
-       </Link>
+        </Link>
 
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Login</MenuItem>
+        <Link to="/admin" style={{ textDecoration: "none" }}>
+          <MenuItem onClick={handleClose}>Admin</MenuItem>
+        </Link>
+
+        {isAuthenticated ? (
+          <MenuItem onClick={() => logout()}>Logout</MenuItem>
+        ) : (
+          <MenuItem onClick={() => loginWithRedirect()}>Login</MenuItem>
+        )}
       </Menu>
     </div>
   );
 }
-
-   

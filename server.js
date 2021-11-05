@@ -7,18 +7,16 @@ const app = express();
 
 require("dotenv").config();
 
-app.use(express.static('client/build'));
+app.use(express.static("client/build"));
 app.use(express.json());
 app.use(cors());
-
-
 
 const productSchema = new mongoose.Schema({
   title: String,
   price: Number,
   description: String,
   category: String,
-  image: String
+  image: String,
 });
 
 const Product = mongoose.model("Product", productSchema);
@@ -86,7 +84,7 @@ app.put("/api/products/:id", (req, res) => {
   category ? (updatedProduct.category = category) : null;
   image ? (updatedProduct.image = image) : null;
 
-  Product.findByIdAndUpdate(id, updatedProduct, {new : true}).then(
+  Product.findByIdAndUpdate(id, updatedProduct, { new: true }).then(
     (product) => {
       res.send(product);
     },
@@ -108,9 +106,9 @@ app.delete("/api/products/:id", (req, res) => {
   );
 });
 
-app.get('*', (req, res) => {
-    res.sendFile(__dirname+'/client/build/index.html');
-  });
+app.get("*", (req, res) => {
+  res.sendFile(__dirname + "/client/build/index.html");
+});
 
 function initProducts() {
   Product.findOne()
@@ -118,8 +116,7 @@ function initProducts() {
       if (!product) {
         fs.readFile("./initialProducts.json", "utf8", (err, data) => {
           let initialProducts = JSON.parse(data);
-          Product.insertMany(initialProducts).then((products) => {
-          });
+          Product.insertMany(initialProducts).then((products) => {});
         });
       } else {
         console.log("BD Is Full");
@@ -132,17 +129,18 @@ function initProducts() {
 
 initProducts();
 
-const {DB_USER, DB_PASS, DB_NAME, DB_HOST} = process.env;
+const { DB_USER, DB_PASS, DB_NAME, DB_HOST } = process.env;
 
 const port = process.env.PORT || 8080;
- 
+
 mongoose
   .connect(
-      `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`, 
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+    `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(
     () => {
       app.listen(port);
