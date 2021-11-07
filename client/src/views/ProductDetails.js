@@ -14,6 +14,7 @@ import Loading from "../components/Loader/Loader.js";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { CartContext } from "../contexts/CartContext.js";
 import FadeIn from "react-fade-in";
+import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,8 +78,9 @@ function ProductDetails() {
       .then((data) => {
         setProduct(data);
         setLoader(false);
+        console.log(data);
       });
-  });
+  }, []);
 
   return (
     <>
@@ -110,6 +112,7 @@ function ProductDetails() {
               <Typography className={classes.space}>
                 ${product.price}
               </Typography>
+
               <IconButton
                 className={classes.add}
                 edge="start"

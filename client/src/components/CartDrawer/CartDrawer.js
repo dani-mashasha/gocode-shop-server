@@ -6,17 +6,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import {
-  Badge,
-  Icon,
-  IconButton,
-  ListItemSecondaryAction,
-} from "@material-ui/core";
+import { Badge, IconButton } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { CartContext } from "../../contexts/CartContext.js";
-import SimpleCard from "../CartItem.js";
+import CartItem from "../CartItem/CartItem.js";
 import PaymentIcon from "@material-ui/icons/Payment";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -69,7 +63,7 @@ export default function CartDrawer() {
         {cart.length > 0
           ? cart.map((product) => (
               <ListItem>
-                <SimpleCard props={product} />
+                <CartItem props={product} />
               </ListItem>
             ))
           : null}
@@ -80,14 +74,6 @@ export default function CartDrawer() {
           <p style={{ padding: "5px" }}>
             Total Price: {Math.round(totalPrice * 100) / 100}$
           </p>
-
-          {/* <Button
-            color={"primary"}
-            variant="contained"
-            endIcon={<PaymentIcon />}
-          >
-            <Link to="/profile">advance to payment</Link>
-          </Button> */}
 
           {isAuthenticated ? (
             <Link to="/profile" style={{ textDecoration: "none" }}>

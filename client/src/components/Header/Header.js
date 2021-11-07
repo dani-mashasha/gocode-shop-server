@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  headline: {
+    "@media (max-width: 500px)": {
+      display: "none",
+    },
+  },
 }));
 
 export default function Header() {
@@ -39,7 +44,7 @@ export default function Header() {
               <StoreIcon
                 style={{ fontSize: " 33px", position: "relative", top: "5px" }}
               />
-              Shopping Store
+              <span className={classes.headline}>Shopping store</span>
             </Link>
           </Typography>
           {isAuthenticated && <p>{user.name}</p>}
