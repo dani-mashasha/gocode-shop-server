@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import CartDrawer from "../CartDrawer/CartDrawer.js";
 import LoginMenu from "../LoginMenu/LoginMenu.js";
 import StoreIcon from "@material-ui/icons/Store";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: "#FFFFFF",
+    textDecoration: "none",
+    fontFamily: "Helvetica",
   },
   headline: {
     "@media (max-width: 500px)": {
@@ -26,28 +28,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
-  const { user, isAuthenticated } = useAuth0();
 
   return (
     <div className={classes.root} style={{ marginBottom: "30px" }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h4" className={classes.title}>
-            <Link
-              to="/"
-              style={{
-                color: "#FFFFFF",
-                textDecoration: "none",
-                fontFamily: "Helvetica",
-              }}
-            >
-              <StoreIcon
-                style={{ fontSize: " 33px", position: "relative", top: "5px" }}
-              />
-              <span className={classes.headline}>Shopping store</span>
-            </Link>
+          <Typography
+            variant="h4"
+            component={Link}
+            to="/"
+            className={classes.title}
+          >
+            <StoreIcon
+              style={{ fontSize: " 33px", position: "relative", top: "5px" }}
+            />
+            <span className={classes.headline}>Shopping store</span>
           </Typography>
-          {isAuthenticated && <p>{user.name}</p>}
+          {false && <p>hello</p>}
           <LoginMenu />
 
           <CartDrawer />

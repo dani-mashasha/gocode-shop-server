@@ -1,9 +1,11 @@
 import MaterialTable from "material-table";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ProductsContext } from "../contexts/ProductsContext.js";
 
 function AdminPanel() {
-  const { products, setProducts } = useContext(ProductsContext);
+  const { productsOrigin, setproductsOrigin, onAdd, onDelete, onUpdate } =
+    useContext(ProductsContext);
+
   const columns = [
     { title: "ID", field: "_id", editable: false },
     {
@@ -35,41 +37,51 @@ function AdminPanel() {
     {
       title: "Price",
       field: "price",
-      type: "numeric",
+      type: "currency",
+      currencySetting: {
+        currencyCode: "USD",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      },
       validate: (rowData) =>
         !rowData.price || rowData.price <= 0
           ? { isValid: false, helperText: "Required" }
           : true,
     },
   ];
+
   return (
     <>
       <MaterialTable
         title="Products Data"
-        data={products}
+        data={productsOrigin}
         columns={columns}
         editable={{
           onRowAdd: (newRow) =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
-                setProducts([...products, newRow]);
+                setproductsOrigin([...productsOrigin, newRow]);
                 resolve();
               }, 2000);
+              onAdd(newRow);
             }),
 
           onRowDelete: (selectedRow) =>
             new Promise((resolve, reject) => {
               const id = selectedRow._id;
               setTimeout(() => {
-                setProducts(products.filter((product) => product._id !== id));
+                setproductsOrigin(
+                  productsOrigin.filter((product) => product._id !== id)
+                );
                 resolve();
               });
+              onDelete(id);
             }),
 
           onRowUpdate: (updatedRow, oldRow) =>
             new Promise((resolve, reject) => {
               const id = oldRow._id;
-              const updatedProduct = products.find(
+              const updatedProduct = productsOrigin.find(
                 (product) => product._id === id
               );
               updatedProduct.title = updatedRow.title;
@@ -79,15 +91,21 @@ function AdminPanel() {
               updatedProduct.price = updatedRow.price;
 
               setTimeout(() => {
-                setProducts(products);
+                setproductsOrigin(productsOrigin);
                 resolve();
               });
-              console.log(updatedProduct);
+              onUpdate(id, updatedRow);
             }),
         }}
         options={{
           actionsColumnIndex: -1,
           addRowPosition: "first",
+          cellStyle: {
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            maxWidth: 100,
+          },
         }}
       />
     </>

@@ -12,7 +12,6 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { CartContext } from "../../contexts/CartContext.js";
 import CartItem from "../CartItem/CartItem.js";
 import PaymentIcon from "@material-ui/icons/Payment";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles({
   list: {
@@ -28,7 +27,6 @@ const useStyles = makeStyles({
 
 export default function CartDrawer() {
   const { cart, itemsInCart, totalPrice } = useContext(CartContext);
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -75,7 +73,7 @@ export default function CartDrawer() {
             Total Price: {Math.round(totalPrice * 100) / 100}$
           </p>
 
-          {isAuthenticated ? (
+          {false ? (
             <Link to="/profile" style={{ textDecoration: "none" }}>
               <Button
                 color={"primary"}
@@ -87,7 +85,6 @@ export default function CartDrawer() {
             </Link>
           ) : (
             <Button
-              onClick={() => loginWithRedirect()}
               color={"primary"}
               variant="contained"
               endIcon={<PaymentIcon />}

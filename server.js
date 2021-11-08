@@ -21,6 +21,8 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
+module.exports = Product;
+
 app.get("/", (req, res) => {
   res.send("Home");
 });
@@ -128,6 +130,9 @@ function initProducts() {
 }
 
 initProducts();
+
+app.use("/api/auth", require("./routers/userRouter.js"));
+// app.use("/api/products", require("./routers/productRouter.js"));
 
 const { DB_USER, DB_PASS, DB_NAME, DB_HOST } = process.env;
 

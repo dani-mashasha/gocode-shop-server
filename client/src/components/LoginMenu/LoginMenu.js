@@ -4,7 +4,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 
 export default function LoginMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -15,8 +14,6 @@ export default function LoginMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
   return (
     <div>
@@ -50,11 +47,7 @@ export default function LoginMenu() {
           <MenuItem onClick={handleClose}>Admin</MenuItem>
         </Link>
 
-        {isAuthenticated ? (
-          <MenuItem onClick={() => logout()}>Logout</MenuItem>
-        ) : (
-          <MenuItem onClick={() => loginWithRedirect()}>Login</MenuItem>
-        )}
+        {false ? <MenuItem>Logout</MenuItem> : <MenuItem>Login</MenuItem>}
       </Menu>
     </div>
   );
