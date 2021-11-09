@@ -47,7 +47,13 @@ export default function LoginMenu() {
           <MenuItem onClick={handleClose}>Admin</MenuItem>
         </Link>
 
-        {false ? <MenuItem>Logout</MenuItem> : <MenuItem>Login</MenuItem>}
+        {false ? (
+          <MenuItem>Logout</MenuItem>
+        ) : (
+          <MenuItem component={Link} to={"/login"}>
+            Login
+          </MenuItem>
+        )}
       </Menu>
     </div>
   );

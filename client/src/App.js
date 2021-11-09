@@ -7,6 +7,7 @@ import ProductsGrid from "./views/ProductsGrid.js";
 import Header from "./components/Header/Header.js";
 import Footer from "./components/Footer/Footer.js";
 import Profile from "./views/Profile.js";
+import LoginPage from "./views/LoginPage.js";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,10 @@ function App() {
     <Router>
       <Header />
       <Switch>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+
         <Route path="/products-grid">
           <ProductsGrid />
         </Route>

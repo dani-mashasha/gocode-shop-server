@@ -7,11 +7,11 @@ const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   try {
-    const { userName, email, password, passwordVerify } = req.body;
+    const { userName, email, password, passwordVerify, address } = req.body;
 
     // validation
 
-    if (!userName || !email || !password || !passwordVerify) {
+    if (!userName || !email || !password || !passwordVerify || !address) {
       return res
         .status(400)
         .json({ errorMessage: "Please enter all required fields." });
@@ -45,6 +45,7 @@ router.post("/", async (req, res) => {
         userName,
         email,
         passwordHash,
+        address,
       });
       const savedUser = await newUser.save();
 
@@ -75,7 +76,7 @@ router.post("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { userName, email, password, passwordVerify } = req.body;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       return res
@@ -119,7 +120,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/logout", (req, res) => {
+router.post("/logout", (req, res) => {
   res
     .cookie("token", "", {
       httpOnly: true,
@@ -128,4 +129,17 @@ router.get("/logout", (req, res) => {
     .send();
 });
 
+router.get("/loggedIn", (req, res) => {
+  try {
+    const token = req.cookie.token;
+    if (!token) {
+      return res.json(false);
+    } else {
+      jwt.verify(token, process.env.JWT_SECRET);
+      res.send(true);
+    }
+  } catch (err) {
+    res.json(false);
+  }
+});
 module.exports = router;

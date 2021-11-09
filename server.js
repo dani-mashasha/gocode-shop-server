@@ -1,15 +1,17 @@
 const express = require("express");
 const fs = require("fs");
-
 const mongoose = require("mongoose");
 const cors = require("cors");
-const app = express();
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
+
+const app = express();
 
 app.use(express.static("client/build"));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 const productSchema = new mongoose.Schema({
   title: String,
@@ -132,6 +134,7 @@ function initProducts() {
 initProducts();
 
 app.use("/api/auth", require("./routers/userRouter.js"));
+app.use("/api/order", require("./routers/orderRouter.js"));
 // app.use("/api/products", require("./routers/productRouter.js"));
 
 const { DB_USER, DB_PASS, DB_NAME, DB_HOST } = process.env;

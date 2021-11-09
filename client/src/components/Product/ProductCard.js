@@ -45,6 +45,13 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Georgia",
     fontSize: "15px",
   },
+
+  cardFooter: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: "10px",
+  },
 }));
 const ProductCard = (props) => {
   const classes = useStyles();
@@ -60,26 +67,25 @@ const ProductCard = (props) => {
   return (
     <Grid item xs={12} s={6} md={4} lg={3}>
       <Card className={classes.card}>
-        <FadeIn>
-          <CardMedia
-            className={classes.media}
-            image={props.image}
-            title={props.title}
-            component={Link}
-            to={`/products/${props._id}`}
-          />
-          <Typography className={classes.headline}>{props.title}</Typography>
-          <CardContent className={classes.details}>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              className={classes.content}
-            >
-              {props.description}
-            </Typography>
-          </CardContent>
-          <Typography className={classes.space}>${props.price}</Typography>
+        <CardMedia
+          className={classes.media}
+          image={props.image}
+          title={props.title}
+          component={Link}
+          to={`/products/${props._id}`}
+        />
+        <Typography className={classes.headline}>{props.title}</Typography>
+        <CardContent className={classes.details}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            className={classes.content}
+          >
+            {props.description}
+          </Typography>
+        </CardContent>
 
+        <div className={classes.cardFooter}>
           <IconButton
             className={classes.add}
             edge="start"
@@ -100,7 +106,9 @@ const ProductCard = (props) => {
               </FadeIn>
             )}
           </IconButton>
-        </FadeIn>
+
+          <Typography>${props.price}</Typography>
+        </div>
       </Card>
     </Grid>
   );

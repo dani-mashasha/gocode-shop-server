@@ -74,7 +74,7 @@ export const ProductsProvider = (props) => {
       });
   };
 
-  const contexValus = {
+  const contextValus = {
     products,
     setProducts,
     productsOrigin,
@@ -87,7 +87,7 @@ export const ProductsProvider = (props) => {
   };
 
   return (
-    <ProductsContext.Provider value={contexValus}>
+    <ProductsContext.Provider value={contextValus}>
       {props.children}
     </ProductsContext.Provider>
   );
