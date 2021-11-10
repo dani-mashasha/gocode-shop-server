@@ -19,7 +19,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.get("/", auth, async (req, res) => {
+router.post("/allorders", async (req, res) => {
   try {
     const orders = await Order.find();
     res.send(orders);

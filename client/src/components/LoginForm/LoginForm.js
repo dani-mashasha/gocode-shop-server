@@ -8,26 +8,10 @@ import {
   makeStyles,
   TextField,
 } from "@material-ui/core";
-import { useState } from "react";
-
-{
-  /* <Grid
-item
-xs={12}
-md={6}
-style={{ textAlign: "center", padding: "50px" }}
->
-<h1 className={classes.headline}>Create an account</h1>
-<Button
-  className={classes.button}
-  variant="contained"
-  color={"primary"}
-  onClick={handleClick}
->
-  Sign Up
-</Button>
-</Grid> */
-}
+import { useContext, useState } from "react";
+import axios from "axios";
+import { AuthContext } from "../../contexts/AuthContext.js";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   headline: {
@@ -59,6 +43,8 @@ const LoginForm = () => {
 
   const [isNewMember, setIsNewMember] = useState(false);
   const [newUser, seNewtUser] = useState({});
+  const { loggedIn, getLoggedIn, register, login } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -68,7 +54,6 @@ const LoginForm = () => {
         [id]: value,
       };
     });
-    console.log(newUser);
   };
 
   const handleClick = () => {
@@ -76,46 +61,50 @@ const LoginForm = () => {
     seNewtUser({});
   };
 
-  async function register(e) {
+  async function onRegister(e) {
     e.preventDefault();
-    fetch("/api/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    await register(newUser);
+    history.push("/");
   }
-  async function login(e) {
+  async function onLogin(e) {
     e.preventDefault();
-    fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((response) => response)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    await login(newUser);
+    console.log(newUser);
+
+    history.push("/");
   }
+
+  // async function register(e) {
+  //   e.preventDefault();
+  //   try {
+  //     const registerData = newUser;
+  //     console.log(registerData);
+  //     await axios.post("/api/auth", registerData);
+  //     await getLoggedIn();
+  //     history.push("/");
+  //     console.log(history);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+
+  // }
+  // async function login(e) {
+  //   e.preventDefault();
+  //   try {
+  //     const loginData = newUser;
+  //     await axios.post("/api/auth/login", loginData);
+  //     await getLoggedIn();
+  //     history.push("/");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+
   return (
     <Card>
       {!isNewMember ? (
         <Grid container style={{ justifyContent: "center" }}>
           <Grid item xs={12} md={6}>
-            <form onSubmit={login} className={classes.loginForm}>
+            <form onSubmit={onLogin} className={classes.loginForm}>
               <h1 className={classes.headline}>Already a member</h1>
 
               <TextField
@@ -149,7 +138,7 @@ const LoginForm = () => {
                   color={"secondery"}
                   onClick={handleClick}
                 >
-                  Register
+                  Or Register
                 </Button>
               </ButtonGroup>
             </form>
@@ -158,7 +147,7 @@ const LoginForm = () => {
       ) : (
         <Grid container style={{ justifyContent: "center" }}>
           <Grid item xs={12} md={6}>
-            <form onSubmit={register} className={classes.registerForm}>
+            <form onSubmit={onRegister} className={classes.registerForm}>
               <h1 className={classes.headline}>Create an account</h1>
               <TextField
                 id="userName"
@@ -205,7 +194,7 @@ const LoginForm = () => {
                   color={"secondery "}
                   onClick={handleClick}
                 >
-                  Log in
+                  Or Log in
                 </Button>
                 <Button
                   className={classes.button}

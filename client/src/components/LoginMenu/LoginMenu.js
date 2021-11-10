@@ -1,19 +1,29 @@
-import * as React from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext.js";
+import { useContext, useState } from "react";
+import { useHistory } from "react-router";
 
 export default function LoginMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const { loggedIn, logOut } = useContext(AuthContext);
+  const history = useHistory();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  async function onLogOut() {
+    await logOut();
+    history.push("/");
+  }
 
   return (
     <div>
@@ -39,18 +49,22 @@ export default function LoginMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <Link to="/profile" style={{ textDecoration: "none" }}>
-          <MenuItem onClick={handleClose}> Profile </MenuItem>
-        </Link>
+        {loggedIn ? (
+          <MenuItem onClick={handleClose} component={Link} to={"/profile"}>
+            {" "}
+            Profile{" "}
+          </MenuItem>
+        ) : null}
+        <MenuItem onClick={handleClose} component={Link} to={"/admin"}>
+          Admin
+        </MenuItem>
 
-        <Link to="/admin" style={{ textDecoration: "none" }}>
-          <MenuItem onClick={handleClose}>Admin</MenuItem>
-        </Link>
-
-        {false ? (
-          <MenuItem>Logout</MenuItem>
+        {loggedIn ? (
+          <div onClick={onLogOut}>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </div>
         ) : (
-          <MenuItem component={Link} to={"/login"}>
+          <MenuItem onClick={handleClose} component={Link} to={"/login"}>
             Login
           </MenuItem>
         )}

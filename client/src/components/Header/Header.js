@@ -1,10 +1,11 @@
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CartDrawer from "../CartDrawer/CartDrawer.js";
 import LoginMenu from "../LoginMenu/LoginMenu.js";
 import StoreIcon from "@material-ui/icons/Store";
+import { AuthContext, AuthProvider } from "../../contexts/AuthContext.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
+  const { loggedIn, loggedUser } = useContext(AuthContext);
 
   return (
     <div className={classes.root} style={{ marginBottom: "30px" }}>
@@ -44,7 +46,7 @@ export default function Header() {
             />
             <span className={classes.headline}>Shopping store</span>
           </Typography>
-          {false && <p>hello</p>}
+          {loggedIn && <p>Wellcom {loggedUser.userName}</p>}
           <LoginMenu />
 
           <CartDrawer />

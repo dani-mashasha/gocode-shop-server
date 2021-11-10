@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./views/Home.js";
 import ProductDetails from "./views/ProductDetails.js";
@@ -9,16 +9,23 @@ import Footer from "./components/Footer/Footer.js";
 import Profile from "./views/Profile.js";
 import LoginPage from "./views/LoginPage.js";
 import "./App.css";
+import axios from "axios";
+import { AuthContext } from "./contexts/AuthContext.js";
+
+axios.defaults.withCredentials = true;
 
 function App() {
+  const { loggedIn } = useContext(AuthContext);
+
   return (
     <Router>
       <Header />
       <Switch>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-
+        {!loggedIn && (
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+        )}
         <Route path="/products-grid">
           <ProductsGrid />
         </Route>

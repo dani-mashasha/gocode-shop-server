@@ -129,17 +129,18 @@ router.post("/logout", (req, res) => {
     .send();
 });
 
-router.get("/loggedIn", (req, res) => {
+router.post("/loggedIn", async (req, res) => {
   try {
-    const token = req.cookie.token;
+    const token = req.cookies.token;
     if (!token) {
-      return res.json(false);
+      return res.json({ massege: false });
     } else {
-      jwt.verify(token, process.env.JWT_SECRET);
-      res.send(true);
+      const tokenData = jwt.verify(token, process.env.JWT_SECRET);
+      const loggedUser = await User.findOne({ _id: tokenData.user });
+      res.send({ massege: true, loggedUser });
     }
   } catch (err) {
-    res.json(false);
+    res.json({ massege: false });
   }
 });
 module.exports = router;
