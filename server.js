@@ -10,7 +10,12 @@ const app = express();
 
 app.use(express.static("client/build"));
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["/api", "https://gocode-shop-dani.herokuapp.com"],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 const productSchema = new mongoose.Schema({
