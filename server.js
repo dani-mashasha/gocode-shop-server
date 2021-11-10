@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.static("client/build"));
 app.use(express.json());
-app.use(cors({ origin: ["/api"], credentials: true }));
+app.use(cors());
 app.use(cookieParser());
 
 const productSchema = new mongoose.Schema({
