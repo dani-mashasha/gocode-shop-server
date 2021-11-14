@@ -6,8 +6,8 @@ export const CartContext = createContext();
 export const CartProvider = (props) => {
   const [cart, setCart] = useState([]);
   const [itemsInCart, setItemsInCart] = useState(0);
-  const { products } = useContext(ProductsContext);
   const [totalPrice, setTotalPrice] = useState(0);
+  const { products } = useContext(ProductsContext);
 
   const addToCart = (e) => {
     const id = e.currentTarget.value;
@@ -36,7 +36,11 @@ export const CartProvider = (props) => {
     setTotalPrice((prevValue) => prevValue - product.price);
     setItemsInCart(itemsInCart - 1);
   };
-
+  const resetCart = () => {
+    setCart([]);
+    setItemsInCart(0);
+    setTotalPrice(0);
+  };
   const CartValues = {
     cart,
     setCart,
@@ -44,6 +48,7 @@ export const CartProvider = (props) => {
     itemsInCart,
     totalPrice,
     removeFromCart,
+    resetCart,
   };
 
   return (

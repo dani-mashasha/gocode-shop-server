@@ -1,15 +1,5 @@
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  makeStyles,
-  TextField,
-} from "@material-ui/core";
+import { Button, Card, Grid, makeStyles, TextField } from "@material-ui/core";
 import { useContext, useState } from "react";
-import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext.js";
 import { useHistory } from "react-router";
 
@@ -18,13 +8,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     padding: "20px",
   },
-  loginForm: {
+
+  registerForm: {
     display: "flex",
     flexDirection: "column",
     margin: "auto",
     padding: "20px",
   },
-
   button: {
     width: "50%",
     marginLeft: "auto",
@@ -33,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = () => {
+const RegistrationForm = () => {
   const classes = useStyles();
+
   const [newUser, seNewtUser] = useState({});
-  const { login } = useContext(AuthContext);
+  const { register } = useContext(AuthContext);
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -49,11 +40,9 @@ const LoginForm = () => {
     });
   };
 
-  async function onLogin(e) {
+  async function onRegister(e) {
     e.preventDefault();
-    await login(newUser);
-    console.log(newUser);
-
+    await register(newUser);
     history.push("/");
   }
 
@@ -61,8 +50,14 @@ const LoginForm = () => {
     <Card style={{ minHeight: "60vh" }}>
       <Grid container style={{ justifyContent: "center" }}>
         <Grid item xs={12} md={6}>
-          <form onSubmit={onLogin} className={classes.loginForm}>
-            <h1 className={classes.headline}>Already a member</h1>
+          <form onSubmit={onRegister} className={classes.registerForm}>
+            <h1 className={classes.headline}>Create an account</h1>
+            <TextField
+              id="userName"
+              label="User Name"
+              variant="standard"
+              onChange={handleChange}
+            />
 
             <TextField
               id="email"
@@ -80,13 +75,29 @@ const LoginForm = () => {
               variant="standard"
               onChange={handleChange}
             />
+            <TextField
+              id="passwordVerify"
+              label="Verify Password"
+              type="password"
+              autoComplete="current-password"
+              variant="standard"
+              onChange={handleChange}
+            />
+
+            <TextField
+              id="address"
+              label="Address"
+              variant="standard"
+              onChange={handleChange}
+            />
+
             <Button
               className={classes.button}
               variant="contained"
               color={"primary"}
               type="submit"
             >
-              Log in
+              Register
             </Button>
           </form>
         </Grid>
@@ -95,4 +106,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;

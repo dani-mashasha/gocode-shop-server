@@ -6,13 +6,17 @@ export const AuthContext = createContext();
 export const AuthProvider = (props) => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [loggedUser, setLoggedUser] = useState({});
+  const [isAdmin, setIsAdmin] = useState(null);
 
   async function getLoggedIn() {
     const loggedInRes = await axios.post("/api/auth/loggedIn");
-    setLoggedIn(loggedInRes.data.massege);
-    if (loggedInRes.data.loggedUser) {
-      setLoggedUser(loggedInRes.data.loggedUser);
+    const { massege, loggedUser } = loggedInRes.data;
+    setLoggedIn(massege);
+    if (loggedUser) {
+      setLoggedUser(loggedUser);
+      setIsAdmin(loggedUser.isAdmin);
     } else {
+      setIsAdmin(false);
       setLoggedUser({});
     }
   }
@@ -52,6 +56,7 @@ export const AuthProvider = (props) => {
     register,
     login,
     loggedUser,
+    isAdmin,
   };
   return (
     <AuthContext.Provider value={contextValus}>

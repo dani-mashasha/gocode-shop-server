@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 router.post("/", async (req, res) => {
   try {
     const { userName, email, password, passwordVerify, address } = req.body;
+    let isAdmin = false;
 
     // validation
 
@@ -34,6 +35,9 @@ router.post("/", async (req, res) => {
         .status(400)
         .json({ errorMessage: "An account with this email already exists." });
     } else {
+      if (email === "dmmashasha@gmail.com") {
+        isAdmin = true;
+      }
       // hash the password
 
       const salt = await bcrypt.genSaltSync();
@@ -46,6 +50,7 @@ router.post("/", async (req, res) => {
         email,
         passwordHash,
         address,
+        isAdmin,
       });
       const savedUser = await newUser.save();
 

@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext.js";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router";
+import { CartContext } from "../../contexts/CartContext.js";
 
-export default function LoginMenu() {
+export default function PersonalMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { loggedIn, logOut } = useContext(AuthContext);
+  const { loggedIn, logOut, isAdmin } = useContext(AuthContext);
+  const { resetCart } = useContext(CartContext);
   const history = useHistory();
 
   const handleClick = (event) => {
@@ -22,6 +24,7 @@ export default function LoginMenu() {
 
   async function onLogOut() {
     await logOut();
+    resetCart();
     history.push("/");
   }
 
@@ -41,6 +44,7 @@ export default function LoginMenu() {
       </IconButton>
 
       <Menu
+        style={{ top: "30px", left: "-40px" }}
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
@@ -49,23 +53,25 @@ export default function LoginMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
-        {loggedIn ? (
+        {isAdmin && (
+          <MenuItem onClick={handleClose} component={Link} to={"/admin"}>
+            Admin
+          </MenuItem>
+        )}
+        {loggedIn && (
           <MenuItem onClick={handleClose} component={Link} to={"/profile"}>
             {" "}
             Profile{" "}
           </MenuItem>
-        ) : null}
-        <MenuItem onClick={handleClose} component={Link} to={"/admin"}>
-          Admin
-        </MenuItem>
+        )}
 
         {loggedIn ? (
           <div onClick={onLogOut}>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>Log out</MenuItem>
           </div>
         ) : (
           <MenuItem onClick={handleClose} component={Link} to={"/login"}>
-            Login
+            Log in
           </MenuItem>
         )}
       </Menu>

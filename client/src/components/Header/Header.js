@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CartDrawer from "../CartDrawer/CartDrawer.js";
-import LoginMenu from "../LoginMenu/LoginMenu.js";
+import LoginMenu from "../PersonalMenu/PersonalMenu.js";
 import StoreIcon from "@material-ui/icons/Store";
-import { AuthContext, AuthProvider } from "../../contexts/AuthContext.js";
+import { AuthContext } from "../../contexts/AuthContext.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {

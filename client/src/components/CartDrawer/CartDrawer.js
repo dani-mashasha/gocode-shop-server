@@ -12,6 +12,7 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { CartContext } from "../../contexts/CartContext.js";
 import CartItem from "../CartItem/CartItem.js";
 import PaymentIcon from "@material-ui/icons/Payment";
+import { AuthContext } from "../../contexts/AuthContext.js";
 
 const useStyles = makeStyles({
   list: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 
 export default function CartDrawer() {
   const { cart, itemsInCart, totalPrice } = useContext(CartContext);
+  const { loggedIn } = useContext(AuthContext);
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -88,6 +90,8 @@ export default function CartDrawer() {
               color={"primary"}
               variant="contained"
               endIcon={<PaymentIcon />}
+              component={Link}
+              to={loggedIn ? "/profile" : "/login"}
             >
               advance to payment
             </Button>
