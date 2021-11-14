@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 export const ProductsContext = createContext();
 
@@ -13,66 +14,32 @@ export const ProductsProvider = (props) => {
       return rv;
     }, {});
 
+  async function getProducts() {
+    const productsRes = await axios.get("/api/products");
+    console.log(productsRes.data);
+    setProducts(productsRes.data);
+    setproductsOrigin(productsRes.data);
+    setCategories(Object.keys(groupBy(productsRes.data, "category")));
+  }
+
   useEffect(() => {
-    fetch("/api/products")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-        setproductsOrigin(data);
-        console.log(data);
-        setCategories(Object.keys(groupBy(data, "category")));
-      });
+    getProducts();
   }, []);
 
-  const onAdd = (data) => {
-    fetch("/api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+  async function onAdd(data) {
+    await axios.post("/api/products", data);
+    console.log("added sucssefully");
+  }
 
-  const onDelete = (id) => {
-    fetch(`/api/products/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: null,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  const onUpdate = (id, data) => {
-    fetch(`/api/products/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+  async function onDelete(id) {
+    await axios.delete(`/api/products/${id}`);
+    console.log("deleted sucssefully");
+  }
+
+  async function onUpdate(id, data) {
+    await axios.put(`/api/products/${id}`, data);
+    console.log("updated sucssefully");
+  }
 
   const contextValus = {
     products,

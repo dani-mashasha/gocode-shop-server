@@ -2,7 +2,7 @@ import Products from "../components/Products/Products.js";
 
 function Home() {
   return (
-    <div className="App">
+    <div className="page">
       <Products />
     </div>
   );

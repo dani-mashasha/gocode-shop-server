@@ -34,7 +34,7 @@ function Home() {
   const classes = useStyles();
 
   return (
-    <div className="App">
+    <div className={"page"}>
       <div className={classes.homeImg}>
         <FadeIn>
           <h1 className={classes.headline}>Welcom to my online store</h1>

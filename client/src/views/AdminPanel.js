@@ -3,10 +3,10 @@ import OrdersTable from "../components/OrdersTable/OrdersTable.js";
 
 function AdminPanel() {
   return (
-    <>
+    <div className={"page"}>
       <AdminTable />
       <OrdersTable />
-    </>
+    </div>
   );
 }
 

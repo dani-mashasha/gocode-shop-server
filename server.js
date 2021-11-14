@@ -12,7 +12,7 @@ app.use(express.static("client/build"));
 app.use(express.json());
 app.use(
   cors({
-    origin: ["/api", "https://gocode-shop-dani.herokuapp.com"],
+    origin: ["/api"],
     credentials: true,
   })
 );

@@ -15,6 +15,8 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { CartContext } from "../contexts/CartContext.js";
 import FadeIn from "react-fade-in";
 import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
+import { AutoFixOffSharp } from "@mui/icons-material";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,18 +74,19 @@ function ProductDetails() {
     setTimeout(() => setIsAdded(false), 1000);
   };
 
+  async function getProduct() {
+    const productRes = await axios.get(`/api/products/${id}`);
+    setProduct(productRes.data);
+    setLoader(false);
+    console.log(productRes.data);
+  }
+
   useEffect(() => {
-    fetch(`/api/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(data);
-        setLoader(false);
-        console.log(data);
-      });
+    getProduct();
   }, []);
 
   return (
-    <>
+    <div className={"page"}>
       {loader ? (
         <Loading />
       ) : (
@@ -137,7 +140,7 @@ function ProductDetails() {
           </Card>
         </Grid>
       )}
-    </>
+    </div>
   );
 }
 

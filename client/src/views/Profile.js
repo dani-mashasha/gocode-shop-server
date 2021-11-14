@@ -20,15 +20,14 @@ function Profile() {
   }
 
   return (
-    <>
-      {" "}
+    <div className={"page"}>
       <h1> Hello {loggedUser.userName} </h1>
       {cart.length < 1 ? (
         <p>your cart is empty</p>
       ) : (
         <button onClick={pleacOrder}>Order Now</button>
       )}
-    </>
+    </div>
   );
 }
 
