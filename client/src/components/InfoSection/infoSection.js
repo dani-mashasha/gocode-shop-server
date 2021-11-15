@@ -9,6 +9,12 @@ const InfoSection = () => {
   return (
     <Grid className={classes.main} spacing={2}>
       <Fade bottom>
+        <Grid item className={classes.header}>
+          <div>
+            <h1>About Express Shop</h1>
+          </div>
+        </Grid>
+
         <Grid
           className={classes.section}
           style={{ padding: "0", marginTop: "20px", marginBottom: "20px" }}
@@ -17,14 +23,16 @@ const InfoSection = () => {
         >
           <Grid item xs={12} md={6}>
             {" "}
-            <span>
-              hvjvjnnkjnkbvcc jbhvgv khbgvgc fds nbvfcdr vbcfxdx nnn gcd dxd
-              hvgc vfx nnknf vfx njh vfxx hvjvjnnkjnkbvcc jbhvgv khbgvgc fds
-              nbvfcdr vbcfxdx n vfx nnknf vfx njh vfxxr vbcfxdx nnn gcd dxd hvgc
-              khbgvgc fds nbvfcd hvjvjnnkjnkbvcc jbhvgv khbgvgc fds nbvfcdr
-              vbcfxdx nnn gcd dxd hvgc hvjvjnnkjnkbvcc jbhvgvnn gcd dxd hvgc vfx
-              nnknf vfx njh vfxx
-            </span>
+            <div>
+              <h1>Express Delivery</h1>
+              <span>
+                Nulla in condimentum velit. Fusce efficitur quis libero ac
+                ultricies. Vestibulum ante ipsum primis in faucibus orci luctus
+                et ultrices posuere cubilia curae; Vestibulum in justo rutrum,
+                ultrices diam eu, porttitor ante. Ut commodo purus enim, a
+                pretium arcu luctus in. Donec in lorem sodales sem
+              </span>
+            </div>
           </Grid>{" "}
           <Grid item xs={12} md={6}>
             <img
@@ -50,14 +58,16 @@ const InfoSection = () => {
             />
           </Grid>{" "}
           <Grid item xs={12} md={6}>
-            <span>
-              hvjvjnnkjnkbvcc jbhvgv khbgvgc fds nbvfcdr vbcfxdx nnn gcd dxd
-              hvgc vfx nnknf vfx njh vfxx hvjvjnnkjnkbvcc jbhvgv khbgvgc fds
-              nbvfcdr vbcfxdx n vfx nnknf vfx njh vfxxr vbcfxdx nnn gcd dxd hvgc
-              khbgvgc fds nbvfcd hvjvjnnkjnkbvcc jbhvgv khbgvgc fds nbvfcdr
-              vbcfxdx nnn gcd dxd hvgc hvjvjnnkjnkbvcc jbhvgvnn gcd dxd hvgc vfx
-              nnknf vfx njh vfxx
-            </span>
+            <div>
+              <h1>Easy and Simple Payment </h1>
+              <span>
+                Aliquam vitae purus vitae metus gravida aliquet mollis sed
+                ipsum. Aliquam placerat sapien sit amet nisi ultrices cursus. Ut
+                pharetra orci luctus, fermentum eros ut, dignissim nulla. Morbi
+                elit dui, placerat in diam non, pretium lacinia velit. Nulla ex
+                elit, gravida a nulla malesuad
+              </span>
+            </div>
           </Grid>{" "}
         </Grid>
       </Fade>

@@ -37,6 +37,7 @@ export const AuthProvider = (props) => {
       getLoggedIn();
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
   async function login(data) {
@@ -46,6 +47,7 @@ export const AuthProvider = (props) => {
       getLoggedIn();
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
 

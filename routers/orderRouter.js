@@ -9,7 +9,7 @@ router.post("/", auth, async (req, res) => {
       user,
       products,
       totalPrice,
-      time: new Date(),
+      date: new Date(),
     });
 
     const savedOrder = await newOrder.save();

@@ -8,7 +8,7 @@ const HomeHeadline = () => {
   return (
     <div className={classes.homeImg}>
       <FadeIn>
-        <h1 className={classes.headline}>Welcom to my online store</h1>
+        <h1 className={classes.headline}>Welcom to Express Shop</h1>
       </FadeIn>{" "}
       <FadeIn>
         <Link className={classes.link} to="/products-grid">

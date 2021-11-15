@@ -1,5 +1,5 @@
 import MaterialTable from "material-table";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ProductsContext } from "../../contexts/ProductsContext.js";
 
 function AdminTable() {
@@ -29,8 +29,11 @@ function AdminTable() {
           : true,
     },
     {
-      title: "Image",
       field: "image",
+      title: "Image",
+      align: "center",
+      render: (rowData) => <img src={rowData.image} style={{ width: 50 }} />,
+
       validate: (rowData) =>
         !rowData.image ? { isValid: false, helperText: "Required" } : true,
     },
@@ -38,6 +41,8 @@ function AdminTable() {
       title: "Price",
       field: "price",
       type: "currency",
+      align: "center",
+
       currencySetting: {
         currencyCode: "USD",
         minimumFractionDigits: 0,

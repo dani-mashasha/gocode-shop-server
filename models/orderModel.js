@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema({
   user: Object,
   products: Array,
   totalPrice: Number,
-  time: String,
+  date: Object,
 });
 
 const Order = mongoose.model("order", orderSchema);

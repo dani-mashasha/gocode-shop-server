@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     overflow: "hidden",
     display: "-webkit-box",
-    WebkitLineClamp: 3,
+    WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
   },
   headline: {

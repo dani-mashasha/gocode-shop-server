@@ -47,6 +47,7 @@ export default function PersonalMenu() {
         style={{ top: "30px", left: "-40px" }}
         id="basic-menu"
         anchorEl={anchorEl}
+        disableScrollLock={true}
         open={open}
         onClose={handleClose}
         MenuListProps={{

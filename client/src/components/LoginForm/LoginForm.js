@@ -12,6 +12,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext.js";
 import { useHistory } from "react-router";
+import { Alert } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   headline: {
@@ -37,6 +38,8 @@ const LoginForm = () => {
   const classes = useStyles();
   const [newUser, seNewtUser] = useState({});
   const { login } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -51,14 +54,23 @@ const LoginForm = () => {
 
   async function onLogin(e) {
     e.preventDefault();
-    await login(newUser);
-    console.log(newUser);
+    const message = await login(newUser);
+    if (message) {
+      setErrorMessage(message.response.data);
+    } else {
+      setErrorMessage(null);
 
-    history.push("/");
+      history.push("/");
+    }
   }
 
   return (
     <Card style={{ minHeight: "60vh" }}>
+      {errorMessage && (
+        <Alert severity="error" style={{ justifyContent: "center" }}>
+          This is an error alert — {errorMessage.errorMessage}
+        </Alert>
+      )}
       <Grid container style={{ justifyContent: "center" }}>
         <Grid item xs={12} md={6}>
           <form onSubmit={onLogin} className={classes.loginForm}>

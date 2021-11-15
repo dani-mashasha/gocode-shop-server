@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFFFFF",
     textDecoration: "none",
     fontFamily: "Helvetica",
+    marginRight: "auto",
+    maxWidth: "300px",
   },
   headline: {
     "@media (max-width: 500px)": {
@@ -44,7 +46,7 @@ export default function Header() {
             <StoreIcon
               style={{ fontSize: " 33px", position: "relative", top: "5px" }}
             />
-            <span className={classes.headline}>Shopping store</span>
+            <span className={classes.headline}>Express Shop</span>
           </Typography>
           {loggedIn && <p>Wellcom {loggedUser.userName}</p>}
           <LoginMenu />
