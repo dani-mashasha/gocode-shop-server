@@ -4,24 +4,26 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { CardMedia } from "@material-ui/core";
+import { CardMedia, Divider } from "@material-ui/core";
 import { CartContext } from "../../contexts/CartContext.js";
 import useStyles from "./style.js";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 export default function CartItem({ props }) {
   const classes = useStyles();
   const { addToCart, removeFromCart } = useContext(CartContext);
   return (
-    <Card className={classes.root}>
-      <CardContent className={classes.noPadding}>
+    <div className={classes.root}>
+      <div>
         <CardMedia
           className={classes.media}
           image={props.image}
           title={props.title}
         />
-      </CardContent>
+      </div>
 
-      <CardContent className={classes.noPadding}>
+      <div>
         <Typography
           className={classes.title}
           color="textSecondary"
@@ -30,22 +32,22 @@ export default function CartItem({ props }) {
           {props.title}
         </Typography>
 
-        <CardActions className={classes.noPadding}>
+        <div className={classes.amount}>
           <Button onClick={removeFromCart} value={props._id} size="xs">
-            -
+            <RemoveIcon value="svg" />
           </Button>{" "}
-          {props.amount && props.amount}{" "}
+          <h2>{props.amount && props.amount} </h2>
           <Button onClick={addToCart} size="xs" value={props._id}>
-            +
+            <ControlPointIcon text={true} />
           </Button>
-        </CardActions>
+        </div>
         <Typography className={classes.flexCenter}>
           {props.amount
             ? Math.round(props.price * props.amount * 100) / 100
             : props.price}
           $
         </Typography>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

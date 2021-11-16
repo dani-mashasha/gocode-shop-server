@@ -49,6 +49,7 @@ export const CartProvider = (props) => {
     totalPrice,
     removeFromCart,
     resetCart,
+    setTotalPrice,
   };
 
   return (

@@ -4,11 +4,12 @@ const auth = require("../middleware/auth.js");
 
 router.post("/", auth, async (req, res) => {
   try {
-    const { user, products, totalPrice } = req.body;
+    const { user, products, totalPrice, delivery } = req.body;
     const newOrder = new Order({
       user,
       products,
       totalPrice,
+      delivery,
       date: new Date(),
     });
 

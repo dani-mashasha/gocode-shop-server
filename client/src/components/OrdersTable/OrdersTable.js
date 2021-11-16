@@ -41,6 +41,11 @@ function OrdersTable() {
       },
     },
     {
+      title: "delivery",
+      field: "delivery",
+      editable: false,
+    },
+    {
       title: "Shipping Address",
       field: "user.address",
       editable: false,

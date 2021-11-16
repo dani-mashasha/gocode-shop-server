@@ -2,8 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 20,
+    padding: "10px",
     display: "flex",
+    justifyContent: "center",
+    borderBottom: "1px solid #9fabaf8a",
   },
   media: {
     height: "30px",
@@ -28,13 +30,14 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  noPadding: {
-    padding: 0,
-    paddingBottom: "10px",
+  amount: {
+    display: "flex",
+    alignItems: "center",
   },
   flexCenter: {
     display: "flex",
     justifyContent: "center",
+    fontFamily: "system-ui",
   },
 });
 

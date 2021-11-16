@@ -7,7 +7,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import { Badge, IconButton } from "@material-ui/core";
+import { Badge, Divider, IconButton } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { CartContext } from "../../contexts/CartContext.js";
 import CartItem from "../CartItem/CartItem.js";
@@ -24,6 +24,10 @@ const useStyles = makeStyles({
   payment: {
     padding: "10px",
   },
+  nostyle: {
+    display: "content",
+    padding: "0",
+  },
 });
 
 export default function CartDrawer() {
@@ -36,10 +40,7 @@ export default function CartDrawer() {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event.target.innerText === "+" || event.target.innerText === "-") {
-      return;
-    }
-    console.log(event);
+    console.log(anchor, open);
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -56,13 +57,12 @@ export default function CartDrawer() {
         [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
         {cart.length > 0
           ? cart.map((product) => (
-              <ListItem>
+              <ListItem className={classes.nostyle}>
                 <CartItem props={product} />
               </ListItem>
             ))
@@ -75,27 +75,17 @@ export default function CartDrawer() {
             Total Price: {Math.round(totalPrice * 100) / 100}$
           </p>
 
-          {false ? (
-            <Link to="/profile" style={{ textDecoration: "none" }}>
-              <Button
-                color={"primary"}
-                variant="contained"
-                endIcon={<PaymentIcon />}
-              >
-                advance to payment
-              </Button>
-            </Link>
-          ) : (
-            <Button
-              color={"primary"}
-              variant="contained"
-              endIcon={<PaymentIcon />}
-              component={Link}
-              to={loggedIn ? "/profile" : "/login"}
-            >
-              advance to payment
-            </Button>
-          )}
+          <Button
+            color={"primary"}
+            variant="contained"
+            endIcon={<PaymentIcon />}
+            onClick={() => setState({ right: false })}
+            component={Link}
+            to={loggedIn ? "/profile" : "/login"}
+          >
+            {" "}
+            advance to payment
+          </Button>
         </div>
       ) : (
         <p style={{ padding: "5px" }}>Your cart is empty...</p>
