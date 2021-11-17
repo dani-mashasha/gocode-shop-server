@@ -102,9 +102,15 @@ const ProfileCart = () => {
         </FormControl>
 
         <p>Total Price: {Math.round(totalPrice * 100) / 100}$ </p>
-        <Button variant="contained" color="primary" onClick={pleacOrder}>
-          Order Now
-        </Button>
+        {cart.length < 1 ? (
+          <Button disabled variant="contained">
+            Order Now
+          </Button>
+        ) : (
+          <Button variant="contained" color="primary" onClick={pleacOrder}>
+            Order Now
+          </Button>
+        )}
         <Dialog
           open={open}
           onClose={handleClose}

@@ -5,6 +5,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     "& h1, p ": {
       padding: "20px",
+      color: "#00bfff",
+    },
+    "& button ": {
+      marginBottom: "20px",
     },
   },
   form: {

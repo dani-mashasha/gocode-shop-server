@@ -3,17 +3,25 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   cartCard: {
     textAlign: "center",
-    "& h1, h2": {
+    "& h1": {
       padding: "20px",
+      color: "#00bfff",
     },
-    "& h2": {},
+    "& h2": {
+      margin: "20px",
+    },
     "& li": {
       justifyContent: "center",
     },
   },
   profileCart: {
-    maxHeight: "400px",
+    maxHeight: "250px",
     overflow: "auto",
+    [theme.breakpoints.up("md")]: {
+      maxHeight: "none",
+
+      height: "550px",
+    },
   },
 }));
 
