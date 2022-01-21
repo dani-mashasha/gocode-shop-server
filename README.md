@@ -15,6 +15,7 @@ The project was built using:
 * Express Server
 * React
 * NodeJs
+* Material UI
 
 ## Author
   
