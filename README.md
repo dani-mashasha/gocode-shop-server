@@ -6,9 +6,9 @@
 e-commerce web application.
 Link - https://gocode-shop-dani.herokuapp.com/
 
-![Screenshot (10)](https://user-images.githubusercontent.com/55653032/184688181-7f346ca8-0b15-42a9-8c47-540697904763.png)
-![Screenshot (11)](https://user-images.githubusercontent.com/55653032/184688208-4216389f-51cc-4061-ad9b-ac8df450608b.png)
-![Screenshot (12)](https://user-images.githubusercontent.com/55653032/184688300-55d50acd-51ab-468b-ad49-a0146617d79f.png)
+![Screenshot (10)](https://user-images.githubusercontent.com/55653032/184689257-e69e298e-2820-4e55-bddf-ceef69ff8e9c.png)
+![Screenshot (11)](https://user-images.githubusercontent.com/55653032/184689264-d1d9d8c7-a882-481a-97be-f3b38a495592.png)
+![Screenshot (12)](https://user-images.githubusercontent.com/55653032/184689273-53393a74-b32b-4b55-9ff6-50d4ca7e6338.png)
 
 ## Description
 
