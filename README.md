@@ -4,7 +4,6 @@
 # Shopping-app
 
 e-commerce web application.
-Link - https://gocode-shop-dani.herokuapp.com/
 
 ![Screenshot (10)](https://user-images.githubusercontent.com/55653032/184689257-e69e298e-2820-4e55-bddf-ceef69ff8e9c.png)
 ![Screenshot (11)](https://user-images.githubusercontent.com/55653032/184689264-d1d9d8c7-a882-481a-97be-f3b38a495592.png)
